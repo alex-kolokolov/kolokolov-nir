@@ -1,0 +1,58 @@
+{
+  "name": "sdwpf_kelmarsh_to_engie",
+  "output_dir": "artifacts",
+  "data": [
+    {
+      "adapter": "sdwpf",
+      "path": "data/raw/sdwpf.csv",
+      "dataset_id": "sdwpf",
+      "farm_id": "Longyuan",
+      "sample_minutes": 10,
+      "rated_power_kw": 1500.0
+    },
+    {
+      "adapter": "legacy_scada",
+      "path": "data/all_scada.parquet",
+      "dataset_id": "ore_uk",
+      "sample_minutes": 10,
+      "rated_power_kw": {
+        "Kelmarsh": 2050.0,
+        "Penmanshiel": 2050.0
+      }
+    },
+    {
+      "adapter": "generic",
+      "path": "data/raw/engie.csv",
+      "dataset_id": "engie_lhb",
+      "farm_id": "La_Haute_Borne",
+      "sample_minutes": 10,
+      "rated_power_kw": 2050.0,
+      "columns": {
+        "Date_time": "timestamp",
+        "Wind_turbine_name": "turbine_id",
+        "P_avg": "power_kw",
+        "Ws_avg": "wind_speed_ms",
+        "Wa_avg": "wind_direction_deg",
+        "Ot_avg": "ambient_temp_c",
+        "Nf_avg": "rotor_speed_rpm"
+      }
+    }
+  ],
+  "train_farms": ["Longyuan", "Kelmarsh", "Penmanshiel"],
+  "test_farms": ["La_Haute_Borne"],
+  "window": {
+    "lookback": 96,
+    "horizons": [6, 12, 24],
+    "stride": 1
+  },
+  "training": {
+    "epochs": 30,
+    "batch_size": 256,
+    "learning_rate": 0.001,
+    "weight_decay": 0.0001,
+    "num_workers": 0,
+    "val_fraction": 0.2,
+    "seed": 42,
+    "balance_domains": true
+  }
+}

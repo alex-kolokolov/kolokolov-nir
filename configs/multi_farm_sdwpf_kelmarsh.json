@@ -1,0 +1,50 @@
+{
+  "name": "sdwpf_kelmarsh_foundation",
+  "output_dir": "artifacts",
+  "data": [
+    {
+      "adapter": "sdwpf",
+      "path": "data/raw_data/wtbdata_245days.csv",
+      "dataset_id": "sdwpf",
+      "farm_id": "SDWPF",
+      "sample_minutes": 10,
+      "rated_power_kw": 1500.0
+    },
+    {
+      "adapter": "legacy_scada",
+      "path": "data/all_scada.parquet",
+      "dataset_id": "ore_uk",
+      "sample_minutes": 10,
+      "rated_power_kw": {
+        "Kelmarsh": 2050.0,
+        "Penmanshiel": 2050.0
+      }
+    }
+  ],
+  "train_farms": ["SDWPF", "Kelmarsh"],
+  "test_farms": ["Penmanshiel"],
+  "window": {
+    "lookback": 96,
+    "horizons": [1, 3, 6, 12, 24],
+    "stride": 12
+  },
+  "model": {
+    "patch_length": 16,
+    "patch_stride": 8,
+    "d_model": 128,
+    "n_heads": 8,
+    "n_layers": 3,
+    "dropout": 0.1,
+    "sensor_dropout": 0.3
+  },
+  "training": {
+    "epochs": 8,
+    "batch_size": 512,
+    "learning_rate": 0.001,
+    "weight_decay": 0.0001,
+    "num_workers": 0,
+    "val_fraction": 0.15,
+    "seed": 42,
+    "balance_domains": true
+  }
+}

@@ -1,0 +1,78 @@
+{
+  "pipeline": "transfer",
+  "output_dir": "artifacts/uk_transfer_v2",
+  "cubico_config": "configs/research_cross_farm.json",
+  "external_archive": {
+    "farm": "Hill of Towie",
+    "record_id": 22662930,
+    "files": [
+      {"name": "2021.zip", "md5": "86d59d93afab4916bf06949a8986e644"},
+      {"name": "Hill_of_Towie_turbine_metadata.csv", "md5": "bb9673e7adb522b7e15a62f3e7ada6c8"}
+    ]
+  },
+  "source_farms": ["Kelmarsh", "Penmanshiel"],
+  "train_start": "2019-07-01",
+  "development": {
+    "source_validation_start": "2020-02-01",
+    "adaptation_starts": ["2020-03-01", "2020-06-01", "2020-09-01"],
+    "adaptation_days": 7,
+    "evaluation_days": 28
+  },
+  "source_validation_start": "2020-12-01",
+  "adaptation_start": "2021-01-01",
+  "adaptation_days": [1, 7, 30],
+  "primary_adaptation_days": 7,
+  "test_start": "2021-02-01",
+  "test_end": "2021-07-01",
+  "horizons_minutes": [120, 180, 360],
+  "primary_horizon_minutes": 120,
+  "history_minutes": 360,
+  "train_stride_minutes": 120,
+  "adaptation_stride_minutes": 30,
+  "evaluation_stride_minutes": 60,
+  "cubico_timestamp_offset_minutes": 10,
+  "device": "auto",
+  "threads": 4,
+  "development_seed": 42,
+  "seeds": [42, 43, 44],
+  "gru": {
+    "hidden_size": 32,
+    "epochs": 10,
+    "patience": 3,
+    "batch_size": 512,
+    "learning_rate": 0.002,
+    "channel_dropout": 0.12,
+    "adaptation_batch_size": 64,
+    "head_candidates": [
+      {"updates": 60, "learning_rate": 0.002, "penalty": 0.25},
+      {"updates": 150, "learning_rate": 0.002, "penalty": 0.05}
+    ],
+    "full_candidates": [
+      {"updates": 60, "learning_rate": 0.0003, "penalty": 0.05},
+      {"updates": 150, "learning_rate": 0.001, "penalty": 0.01}
+    ],
+    "scratch_candidates": [
+      {"updates": 100, "learning_rate": 0.002, "penalty": 0.0},
+      {"updates": 250, "learning_rate": 0.002, "penalty": 0.0}
+    ]
+  },
+  "catboost": {"iterations": 300, "depth": 5, "learning_rate": 0.07, "local_iterations": [100, 220]},
+  "ses_alphas": [0.2, 0.4, 0.6, 0.8, 1.0],
+  "weather": {
+    "url": "https://storage.googleapis.com/weatherbench2/datasets/hres/2016-2022-0012-240x121_equiangular_with_poles_conservative.zarr",
+    "metadata_sha256": "cabef9ceb2240b804c692ffd13d21f5c8ed919780aba2d505f8a9f7ffc6962d0",
+    "cache": "data/raw_weather/ifs_hres_wb2_1p5deg",
+    "start": "2019-07-01",
+    "locations": {
+      "Kelmarsh": [52.40146083333334, -0.943105],
+      "Penmanshiel": [55.90367642857143, -2.2919617857142853],
+      "Hill of Towie": [57.505768197619034, -3.0683841857142857]
+    },
+    "publication_delay_hours": 8,
+    "minimum_coverage": 0.97,
+    "download_workers": 10
+  },
+  "bootstrap_repetitions": 3000,
+  "bootstrap_block_days": 7,
+  "ramp_threshold_pu": 0.2
+}

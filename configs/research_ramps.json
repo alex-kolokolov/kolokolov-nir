@@ -1,0 +1,24 @@
+{
+  "base_config": "configs/research_cross_farm.json",
+  "output_dir": "artifacts/uk_cross_farm_ramps_v1",
+  "horizons_minutes": [120],
+  "primary_horizon_minutes": 120,
+  "event_threshold_pu": 0.2,
+  "adaptation_days": 7,
+  "calibration_start": "2021-01-08",
+  "calibration_end": "2021-02-01",
+  "test_start": "2021-02-01",
+  "test_end": "2021-04-01",
+  "history_minutes": [30, 60, 120],
+  "classifier": {
+    "iterations": 350,
+    "depth": 5,
+    "learning_rate": 0.05,
+    "l2_leaf_reg": 5.0,
+    "random_seed": 42
+  },
+  "alpha_grid": [0.1, 0.25, 0.5, 0.75, 0.9],
+  "blend_weights": [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0],
+  "switch_quantiles": [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9],
+  "bootstrap_repetitions": 4000
+}

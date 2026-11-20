@@ -1,0 +1,9 @@
+numpy
+pandas
+pyarrow
+scikit-learn
+torch
+catboost
+matplotlib
+requests
+numcodecs==0.16.5

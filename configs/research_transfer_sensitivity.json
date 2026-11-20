@@ -1,0 +1,5 @@
+{
+  "weather_horizon_minutes": 360,
+  "later_delay_hours": [12, 16],
+  "compare_initializations": true
+}
